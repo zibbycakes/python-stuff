@@ -18,7 +18,7 @@ def parseTime(given, index):
 	time = times_by_day[index];
 	chopped = time.split();
 	day = getDay(time);
-	print(day);
+	#print(day);
 	#figure out start index
 	time_start = chopped[1];
 	time_start = militaryTime(time_start) + chopped[1][-2:0];
@@ -61,7 +61,7 @@ def getTimeIndex(time):
 	index = (int(parseHour(time[0:-2]))-8)*2;
 	if(isThirty(time)):
 		index = index + 1;
-	return index;	
+	return index;
 
 def militaryTime(time):
 	if(time[-2:] == 'PM' and int(parseHour(time)) != 12):
@@ -83,13 +83,16 @@ def checkClear(course, day, start, end):
 	return True;
 	#add more cases
 
-#use stand for loop instead
+#maybe print all of the arrays at once? I mean, there's only 5...
 def printSchedule():
-	for day in Schedule:
-		index = 0;
-		for time in day:
-			actual_time = standardTime(indexToMTime(time));
-			print(time);
+	for day in range(0,len(Schedule)):
+            print("It's " + str(day) + " day!");
+            for index in range(0,len(Schedule[day])):
+                #print("This is the length of Schedule[day]: " + str(len(Schedule[day])));
+                print("This is the MT of index " + str(index) + ": " +indexToMTime(index));
+                actual_time = standardTime(indexToMTime(index));
+                print(actual_time);
+                    #print(time);
 
 def indexToMTime(index):
 	if(int(index)%2 == 0):
@@ -99,7 +102,6 @@ def indexToMTime(index):
 		return str(int(((int(index)-1)/2)+8)) + ":30";
 
 def standardTime(milTime):
-	print(milTime);
 	milHour = parseHour(milTime);
 	milMin = isThirty(milTime);
 	isPM = False;
@@ -109,7 +111,8 @@ def standardTime(milTime):
 		isPM = True;
 	elif(milHour == 12):
 		return "12:00PM";
-	answer = int(milHour);
+        else:
+            answer = int(milHour);
 	if(milMin):
 		answer = str(answer) + ":30";
 	else:
@@ -118,7 +121,7 @@ def standardTime(milTime):
 		answer = str(answer) + "PM";
 	else:
 		answer = str(answer) + "AM";
-	return answer;	
+	return answer;
 
 Days = enum(M = 0, T = 1, W = 2, H = 3, F = 4);
 read = open("course_input.txt",'r');
